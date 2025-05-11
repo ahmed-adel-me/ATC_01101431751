@@ -2,7 +2,7 @@
 import { getEventById } from "@/actions/eventActions";
 
 export default async function EventPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const event = await getEventById(id);
 
   if (!event) {
