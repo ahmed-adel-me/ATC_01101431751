@@ -42,7 +42,6 @@ export const createEvent = async (formData) => {
 
     // Extract image file
     const image = formData.get("image");
-
     if (!image || typeof image === "string") {
       throw new Error("Invalid image file");
     }
@@ -75,6 +74,69 @@ export const createEvent = async (formData) => {
     throw new Error("Failed to create event");
   }
 };
+
+// Server action to update an existing event
+// Server action to update an existing event
+export async function editEvent(id, formData) {
+  try {
+    await dbConnect();
+
+    const title = formData.get("title");
+    const description = formData.get("description");
+    const category = formData.get("category");
+    const venue = formData.get("venue");
+    const date = formData.get("date");
+    const price = formData.get("price");
+    const image = formData.get("image"); // file or string
+
+    // Build the update object
+    const updateData = {
+      title,
+      description,
+      category,
+      venue,
+      date,
+      price: Number(price),
+    };
+
+    // Handle new image upload if provided
+    if (image && typeof image !== "string") {
+      // Find existing event to delete old image
+      const existingEvent = await Event.findById(id);
+
+      if (!existingEvent) {
+        throw new Error("Event not found");
+      }
+
+      // Delete the old image
+      const oldImagePath = path.join(
+        process.cwd(),
+        "public",
+        existingEvent.image
+      );
+      await fs.unlink(oldImagePath).catch((err) => {
+        console.warn("Old image not found or already deleted:", err.message);
+      });
+
+      // Save new image
+      const uniqueName = `${crypto.randomUUID()}-${image.name}`;
+      const uploadDir = path.join(process.cwd(), "public/uploads");
+      const imagePath = path.join(uploadDir, uniqueName);
+      const buffer = Buffer.from(await image.arrayBuffer());
+      await fs.mkdir(uploadDir, { recursive: true });
+      await fs.writeFile(imagePath, buffer);
+
+      // Set new image path
+      updateData.image = `/uploads/${uniqueName}`;
+    }
+
+    // Update in the DB
+    await Event.findByIdAndUpdate(id, updateData);
+  } catch (error) {
+    console.error("Error updating event:", error);
+    throw new Error("Failed to update event");
+  }
+}
 
 export const deleteEvent = async (eventId) => {
   try {

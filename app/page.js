@@ -2,8 +2,6 @@ import { getAllEvents } from "@/actions/eventActions";
 import Link from "next/link";
 
 export default async function Home() {
-  // Fetch events from the server
-
   const events = await getAllEvents();
 
   return (
