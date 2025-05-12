@@ -13,6 +13,7 @@ export default function Page() {
           Already have an account?{" "}
           <Link
             href="/auth/login"
+            prefetch={true}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Login

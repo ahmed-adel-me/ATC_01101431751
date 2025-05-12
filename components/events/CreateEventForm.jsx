@@ -2,12 +2,13 @@
 
 import { useForm } from "react-hook-form";
 import { createEvent } from "@/actions/eventActions";
+import SubmitButton from "../SubmitButton";
 
 export default function CreateEventForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm();
 
@@ -88,9 +89,10 @@ export default function CreateEventForm() {
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        disabled={isSubmitting}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
       >
-        Create Event
+        {isSubmitting ? "Creating..." : "Create Event"}
       </button>
     </form>
   );

@@ -1,4 +1,5 @@
 import { createBooking, checkIfBooked } from "@/actions/bookingActions";
+import SubmitButton from "../SubmitButton";
 
 export default async function BookNowButton({ eventId }) {
   const isAlreadyBooked = await checkIfBooked(eventId);
@@ -11,19 +12,10 @@ export default async function BookNowButton({ eventId }) {
     );
   }
 
-  async function handleBooking() {
-    "use server";
-    await createBooking(eventId);
-  }
-
+  const handleBooking = createBooking.bind(null, eventId);
   return (
     <form action={handleBooking}>
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition cursor-pointer"
-      >
-        Book Now
-      </button>
+      <SubmitButton />
     </form>
   );
 }

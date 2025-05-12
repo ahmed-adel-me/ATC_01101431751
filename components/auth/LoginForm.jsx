@@ -3,12 +3,13 @@
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import Spinner from "../Spinner";
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const [error, setError] = useState(null);
 
@@ -71,12 +72,13 @@ export default function LoginForm() {
         )}
       </div>
 
-      {/* Submit Button */}
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
+        disabled={isSubmitting}
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 flex justify-center gap-2 items-center"
       >
-        Log In
+        <span>Log In</span>
+        {isSubmitting && <Spinner className="border-white" size={15} />}
       </button>
     </form>
   );

@@ -13,6 +13,7 @@ export default function Page() {
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"
+            prefetch={true}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Sign Up

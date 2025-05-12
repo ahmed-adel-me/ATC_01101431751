@@ -3,14 +3,29 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import Spinner from "./Spinner";
 
 export default function Navbar() {
   const { data: session, status } = useSession(); // Get session and status
   const pathname = usePathname();
+  const [isSigningOut, setIsSigningOut] = useState(false); // Track sign-out state
+
   const links = [
     { href: "/", label: "Home" },
     { href: "/admin", label: "Admin" },
   ];
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true); // Set loading state
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Sign-out failed:", error);
+    } finally {
+      setIsSigningOut(false); // Reset loading state
+    }
+  };
 
   return (
     <nav className="w-full border-b border-gray-700 bg-white dark:bg-gray-900 px-6 py-4 shadow-sm flex justify-between items-center">
@@ -44,10 +59,18 @@ export default function Navbar() {
           <p className="text-gray-500 dark:text-gray-400">Loading...</p>
         ) : session ? (
           <button
-            onClick={() => signOut()}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+            className={`px-4 py-2 rounded transition bg-red-600 text-white hover:bg-red-700`}
           >
-            Sign Out
+            {isSigningOut ? (
+              <div className="flex items-center gap-2">
+                <span>Signing Out</span>
+                <Spinner className="border-white" size={15} />
+              </div>
+            ) : (
+              "Sign Out"
+            )}
           </button>
         ) : (
           <>

@@ -2,7 +2,7 @@ import { getEventById } from "@/actions/eventActions";
 import EditEventForm from "@/components/events/EditEventForm";
 
 export default async function EditPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const event = await getEventById(id);
 
   if (!event) {

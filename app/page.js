@@ -1,5 +1,5 @@
-import { getAllEvents } from "@/actions/eventActions";
 import EventCard from "@/components/events/EventCard";
+import { getAllEvents } from "@/actions/eventActions";
 
 export default async function Home() {
   const events = await getAllEvents();

@@ -3,13 +3,14 @@
 import { signup } from "@/actions/authActions";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import Spinner from "../Spinner";
 
 export default function SignupForm() {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -104,9 +105,11 @@ export default function SignupForm() {
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+        disabled={isSubmitting}
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 flex justify-center gap-2 items-center"
       >
-        Sign Up
+        <span>Sign Up</span>
+        {isSubmitting && <Spinner className="border-white" size={15} />}
       </button>
     </form>
   );

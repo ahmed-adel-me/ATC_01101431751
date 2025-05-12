@@ -1,9 +1,11 @@
 // app/admin/events/[id]/page.js
 import { getEventById } from "@/actions/eventActions";
 import BookNowButton from "@/components/bookings/BookNowButton";
+import Spinner from "@/components/Spinner";
+import { Suspense } from "react";
 
 export default async function EventPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const event = await getEventById(id);
 
   if (!event) {
@@ -52,7 +54,9 @@ export default async function EventPage({ params }) {
 
           {/* Book Now Button */}
           <div className="flex justify-center">
-            <BookNowButton eventId={event._id} />
+            <Suspense fallback={<Spinner size={50} />}>
+              <BookNowButton eventId={event._id} />
+            </Suspense>
           </div>
         </div>
       </div>
