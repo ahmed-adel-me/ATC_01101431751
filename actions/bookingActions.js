@@ -4,11 +4,11 @@ import { getServerSession } from "next-auth";
 import Booking from "@/models/Booking";
 import { revalidatePath } from "next/cache";
 import dbConnect from "@/lib/dbConnect";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
 
 export async function checkIfBooked(eventId) {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return null;
   }
@@ -23,7 +23,7 @@ export async function checkIfBooked(eventId) {
 }
 
 export async function createBooking(eventId) {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }

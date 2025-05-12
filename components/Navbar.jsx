@@ -7,23 +7,26 @@ import { useState } from "react";
 import Spinner from "./Spinner";
 
 export default function Navbar() {
-  const { data: session, status } = useSession(); // Get session and status
+  const { data: session, status } = useSession();
   const pathname = usePathname();
-  const [isSigningOut, setIsSigningOut] = useState(false); // Track sign-out state
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
+  // Only show Admin link if not a plain user
   const links = [
     { href: "/", label: "Home" },
-    { href: "/admin", label: "Admin" },
+    ...(session?.user?.role !== "user"
+      ? [{ href: "/admin", label: "Admin" }]
+      : []),
   ];
 
   const handleSignOut = async () => {
-    setIsSigningOut(true); // Set loading state
+    setIsSigningOut(true);
     try {
       await signOut();
     } catch (error) {
       console.error("Sign-out failed:", error);
     } finally {
-      setIsSigningOut(false); // Reset loading state
+      setIsSigningOut(false);
     }
   };
 

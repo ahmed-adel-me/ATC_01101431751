@@ -4,6 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import Event from "@/models/Event";
 import fs from "fs/promises";
 import crypto from "crypto";
+import { requireAdmin } from "@/lib/auth/requireAdmin";
 // Server action to get all events
 export const getAllEvents = async () => {
   try {
@@ -38,6 +39,8 @@ export const getEventById = async (eventId) => {
 // Server action to create a new event with an uploaded image
 export const createEvent = async (formData) => {
   try {
+    await requireAdmin();
+    // Connect to the database
     await dbConnect();
 
     // Extract image file
@@ -79,6 +82,8 @@ export const createEvent = async (formData) => {
 // Server action to update an existing event
 export async function editEvent(id, formData) {
   try {
+    await requireAdmin();
+    // Connect to the database
     await dbConnect();
 
     const title = formData.get("title");
@@ -140,6 +145,8 @@ export async function editEvent(id, formData) {
 
 export const deleteEvent = async (eventId) => {
   try {
+    await requireAdmin();
+    // Connect to the database
     await dbConnect();
 
     // Find the event by ID
