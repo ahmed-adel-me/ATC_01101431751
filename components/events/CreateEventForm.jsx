@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { createEvent } from "@/actions/eventActions";
-import SubmitButton from "../SubmitButton";
 
 export default function CreateEventForm() {
   const {

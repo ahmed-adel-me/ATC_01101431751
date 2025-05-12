@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { editEvent } from "@/actions/eventActions";
-import SubmitButton from "../SubmitButton";
 
 export default function EditEventForm({ event }) {
   const {

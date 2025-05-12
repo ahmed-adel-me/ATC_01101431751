@@ -15,7 +15,7 @@ export default async function BookNowButton({ eventId }) {
   const handleBooking = createBooking.bind(null, eventId);
   return (
     <form action={handleBooking}>
-      <SubmitButton />
+      <SubmitButton>Book Now</SubmitButton>
     </form>
   );
 }
