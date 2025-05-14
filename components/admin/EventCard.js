@@ -1,12 +1,9 @@
 import Link from "next/link";
+import DeleteEventButton from "@/components/events/DeleteEventButton";
 
 function EventCard({ event }) {
   return (
-    <Link
-      href={`/admin/events/edit/${event._id}`}
-      key={event._id}
-      className="border p-4 rounded shadow"
-    >
+    <div className="border p-4 rounded shadow flex flex-col">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={event.image}
@@ -19,7 +16,16 @@ function EventCard({ event }) {
       </p>
       <p className="text-gray-800">{event.venue}</p>
       <p className="text-green-600 font-bold">${event.price}</p>
-    </Link>
+      <div className="mt-4 flex gap-2">
+        <Link
+          href={`/admin/events/edit/${event._id}`}
+      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-semibold"
+        >
+          Edit
+        </Link>
+        <DeleteEventButton eventId={event._id} />
+      </div>
+    </div>
   );
 }
 export default EventCard;
