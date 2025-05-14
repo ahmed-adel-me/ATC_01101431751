@@ -12,7 +12,8 @@ export const getAllEvents = async () => {
 
     const events = await Event.find({}).sort({ date: 1 }).lean();
 
-    return events;
+    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
+    return JSON.parse(JSON.stringify(events));
   } catch (error) {
     console.error("Error fetching events:", error);
     throw new Error("Failed to fetch events");
@@ -28,7 +29,8 @@ export const getEventById = async (eventId) => {
     if (!event) {
       throw new Error("Event not found");
     }
-    return event;
+    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
+    return JSON.parse(JSON.stringify(event));
   } catch (error) {
     console.error("Error fetching event:", error);
     throw new Error("Failed to fetch event");

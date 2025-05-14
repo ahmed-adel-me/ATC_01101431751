@@ -30,7 +30,8 @@ export const GetTags = async () => {
   await dbConnect();
   try {
     const tags = await Tag.find().lean();
-    return tags;
+    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
+    return JSON.parse(JSON.stringify(tags));
   } catch (error) {
     throw new Error("Failed to fetch tags");
   }

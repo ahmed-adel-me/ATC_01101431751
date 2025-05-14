@@ -31,7 +31,8 @@ export const GetCategories = async () => {
   await dbConnect();
   try {
     const categories = await Category.find().sort({ date: -1 }).lean();
-    return categories;
+    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
+    return JSON.parse(JSON.stringify(categories));
   } catch (error) {
     throw new Error("Failed to fetch categories");
   }
