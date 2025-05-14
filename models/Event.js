@@ -7,7 +7,17 @@ const eventSchema = new mongoose.Schema(
       required: true,
     },
     description: String,
-    category: String,
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
     date: {
       type: Date,
       required: true,

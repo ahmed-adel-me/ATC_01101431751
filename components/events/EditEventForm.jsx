@@ -1,53 +1,83 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { editEvent } from "@/actions/eventActions";
-
+import { GetCategories } from "@/actions/categoryActions";
+import { GetTags } from "@/actions/tagActions";
+import CategorySelect from "./CategorySelect";
+import TagsMultiSelect from "./TagsMultiSelect";
+import Spinner from "../Spinner";
 export default function EditEventForm({ event }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       title: event.title,
       description: event.description,
-      category: event.category,
+      category: event?.category || "",
       venue: event.venue,
       date: event.date ? new Date(event.date).toISOString().split("T")[0] : "",
       price: event.price,
+      tags: event?.tags || [],
     },
   });
 
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
   const [serverError, setServerError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  const selectedTags = watch("tags") || [];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const cats = await GetCategories();
+        const tgs = await GetTags();
+        setCategories(cats);
+        setTags(tgs);
+      } catch (err) {
+        console.error("Failed to fetch categories or tags:", err);
+      }
+    })();
+  }, []);
   const onSubmit = async (data) => {
     setServerError(null);
     setSuccess(null);
 
     const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description || "");
-    formData.append("category", data.category || "");
-    formData.append("venue", data.venue);
-    formData.append("date", data.date);
-    formData.append("price", data.price);
 
-    if (data.image && data.image[0]) {
-      formData.append("image", data.image[0]); // file upload
+    for (const key in data) {
+      if (key === "image" && data.image && data.image[0]) {
+        formData.append("image", data.image[0]);
+      } else if (key === "tags") {
+        (data.tags || []).forEach((tag) => formData.append("tags", tag));
+      } else {
+        formData.append(key, data[key]);
+      }
     }
 
     try {
       await editEvent(event._id, formData);
       setSuccess("Event updated successfully.");
-      // Optional: Redirect or refresh
-      // window.location.href = "/dashboard";
     } catch (err) {
       console.error(err);
       setServerError("Failed to update event.");
     }
   };
+
+  if (!categories.length && !tags.length) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Spinner size={70} />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -60,9 +90,7 @@ export default function EditEventForm({ event }) {
           placeholder="Title"
           className="w-full border p-2"
         />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )}
+        {errors.title && <p className="text-red-500">{errors.title.message}</p>}
       </div>
 
       <div>
@@ -72,14 +100,20 @@ export default function EditEventForm({ event }) {
           className="w-full border p-2"
         />
       </div>
-
-      <div>
-        <input
-          {...register("category")}
-          placeholder="Category"
-          className="w-full border p-2"
+      {categories.length > 0 && (
+        <CategorySelect
+          categories={categories}
+          register={register}
+          error={errors.category}
         />
-      </div>
+      )}
+
+      <TagsMultiSelect
+        tags={tags}
+        selectedTags={selectedTags}
+        setValue={setValue}
+        error={errors.tags}
+      />
 
       <div>
         <input
@@ -87,9 +121,7 @@ export default function EditEventForm({ event }) {
           placeholder="Venue"
           className="w-full border p-2"
         />
-        {errors.venue && (
-          <p className="text-red-500 text-sm">{errors.venue.message}</p>
-        )}
+        {errors.venue && <p className="text-red-500">{errors.venue.message}</p>}
       </div>
 
       <div>
@@ -98,9 +130,7 @@ export default function EditEventForm({ event }) {
           {...register("date", { required: "Date is required" })}
           className="w-full border p-2"
         />
-        {errors.date && (
-          <p className="text-red-500 text-sm">{errors.date.message}</p>
-        )}
+        {errors.date && <p className="text-red-500">{errors.date.message}</p>}
       </div>
 
       <div>
@@ -113,9 +143,7 @@ export default function EditEventForm({ event }) {
           placeholder="Price"
           className="w-full border p-2"
         />
-        {errors.price && (
-          <p className="text-red-500 text-sm">{errors.price.message}</p>
-        )}
+        {errors.price && <p className="text-red-500">{errors.price.message}</p>}
       </div>
 
       <div>

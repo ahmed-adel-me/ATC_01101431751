@@ -8,6 +8,8 @@ const Sidebar = () => {
   const links = [
     { href: "/admin", label: "Dashboard" },
     { href: "/admin/events", label: "Manage Events" },
+    { href: "/admin/categories", label: "Manage Categories" },
+    { href: "/admin/tags", label: "Manage Tags" },
     // { href: "/admin/users", label: "Manage Users" },
   ];
 
