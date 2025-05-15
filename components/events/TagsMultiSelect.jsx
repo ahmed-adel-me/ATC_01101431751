@@ -1,6 +1,11 @@
 const { useState, useEffect } = require("react");
 
-export default function TagsMultiSelect({ tags, selectedTags, setValue, error }) {
+export default function TagsMultiSelect({
+  tags,
+  selectedTags,
+  setValue,
+  error,
+}) {
   const [open, setOpen] = useState(false);
 
   const handleTagToggle = (tagId) => {
@@ -43,7 +48,7 @@ export default function TagsMultiSelect({ tags, selectedTags, setValue, error })
             {tags.map((tag) => (
               <label
                 key={tag._id}
-                className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <input
                   type="checkbox"

@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteEvent } from "@/actions/eventActions";
 
-export default function DeleteEventButton({ eventId }) {
+export default function DeleteEventButton({ eventId, className }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -25,7 +25,7 @@ export default function DeleteEventButton({ eventId }) {
       type="button"
       onClick={handleDelete}
       disabled={isPending}
-      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-semibold"
+      className={`bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-semibold ${className}`}
     >
       {isPending ? "Deleting..." : "Delete"}
     </button>

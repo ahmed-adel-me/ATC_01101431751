@@ -24,7 +24,7 @@ export const getAllEvents = async (searchParams = {}) => {
       query.tags = { $all: tags }; // or use $in for partial match
     }
 
-    const limit = 10;
+    const limit = 5;
     const skip = (parseInt(page) - 1) * limit;
 
     const events = await Event.find(query)

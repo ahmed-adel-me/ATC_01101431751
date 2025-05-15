@@ -12,7 +12,7 @@ export default function SubmitButton({
     <button
       type="submit"
       disabled={pending}
-      className={`flex cursor-pointer items-center justify-center px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
+      className={`flex items-center justify-center px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
         pending
           ? "bg-gray-400 text-white cursor-not-allowed"
           : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"

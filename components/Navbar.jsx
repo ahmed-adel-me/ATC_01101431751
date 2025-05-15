@@ -37,7 +37,15 @@ export default function Navbar() {
         href="/"
         className="text-xl font-bold text-blue-600 dark:text-blue-400"
       >
-        EventsApp
+        <span
+          className={
+            pathname.startsWith("/admin")
+              ? "hidden md:inline-block"
+              : "inline-block"
+          }
+        >
+          EventsApp
+        </span>
       </Link>
 
       {/* Navigation Links */}

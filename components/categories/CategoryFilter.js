@@ -26,7 +26,7 @@ export default function CategoryFilter({ categories }) {
 
   return (
     <section className="mb-4">
-      <div className="flex items-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 px-4 py-1 shadow-sm">
+      <div className="flex flex-nowrap items-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 px-4 py-1 shadow-sm">
         <div className="flex items-center gap-2 min-w-max">
           <FaLayerGroup className="text-blue-400" />
           <span className="font-semibold text-blue-400 text-base uppercase tracking-wide">
@@ -34,7 +34,7 @@ export default function CategoryFilter({ categories }) {
           </span>
         </div>
         <div className="h-6 border-l border-gray-300 dark:border-gray-600 mx-3" />
-        <div className="flex flex-wrap gap-2 overflow-x-auto pb-1">
+        <div className="flex flex-nowrap overflow-x-scroll gap-2 scrollbar-hide pb-1">
           <button
             onClick={() => handleClick("")}
             className={`px-4 py-2 font-semibold text-sm transition rounded-sm
