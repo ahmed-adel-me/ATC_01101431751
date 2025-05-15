@@ -1,9 +1,11 @@
 import { getAllEvents } from "@/actions/eventActions";
 import EventCard from "@/components/admin/EventCard";
 import Link from "next/link";
+import Pagination from "@/components/events/Pagination";
 
-export default async function EventsPage() {
-  const events = await getAllEvents();
+export default async function EventsPage(props) {
+  const searchParams = await props.searchParams;
+  const { events, totalPages, page } = await getAllEvents(searchParams);
 
   return (
     <div className="p-6">
@@ -26,6 +28,8 @@ export default async function EventsPage() {
           ))}
         </div>
       )}
+
+      <Pagination page={page} totalPages={totalPages} />
     </div>
   );
 }

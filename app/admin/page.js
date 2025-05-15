@@ -2,10 +2,8 @@ import { getAllEvents } from "@/actions/eventActions";
 
 const AdminPage = async () => {
   // Fetch events data
-  const events = await getAllEvents();
+  const { total: totalEvents, events } = await getAllEvents();
 
-  // Example statistics (replace with real data fetching logic)
-  const totalEvents = events.length;
   const totalUsers = 120; // Replace with actual user count
   const totalRevenue = events.reduce((sum, event) => sum + event.price, 0); // Sum of event prices
 

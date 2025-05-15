@@ -5,15 +5,42 @@ import Event from "@/models/Event";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { uploadImage, deleteImage } from "@/lib/utils/imageHandler";
 // Server action to get all events
-export const getAllEvents = async () => {
+export const getAllEvents = async (searchParams = {}) => {
+
+  const { category, tags = [], page = 1 } = searchParams;
+
   try {
-    // Connect to the database
     await dbConnect();
 
-    const events = await Event.find({}).sort({ date: 1 }).lean();
+    const query = {};
 
-    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
-    return JSON.parse(JSON.stringify(events));
+    // Optional: filter by category if provided
+    if (category) {
+      query.category = category;
+    }
+
+    // Optional: filter by tags if provided
+    if (Array.isArray(tags) && tags.length > 0) {
+      query.tags = { $all: tags }; // or use $in for partial match
+    }
+
+    const limit = 10;
+    const skip = (parseInt(page) - 1) * limit;
+
+    const events = await Event.find(query)
+      .sort({ date: 1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const total = await Event.countDocuments(query);
+
+    return {
+      events: JSON.parse(JSON.stringify(events)),
+      total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    };
   } catch (error) {
     console.error("Error fetching events:", error);
     throw new Error("Failed to fetch events");
