@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import { ModeToggle } from "@/components/ModeToggle"; // <-- Import here
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -50,6 +51,9 @@ export default function Navbar() {
 
       {/* Navigation Links */}
       <div className="flex space-x-4 items-center">
+        {/* Dark mode toggle button */}
+        <ModeToggle />
+
         {status === "authenticated" &&
           links.map((link) => (
             <Link

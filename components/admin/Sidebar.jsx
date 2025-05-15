@@ -20,7 +20,7 @@ const Sidebar = () => {
     <>
       {/* Hamburger Button */}
       <button
-        className="fixed top-4 left-4 z-40 md:hidden bg-gray-800 text-white p-2 rounded shadow"
+        className="fixed top-4 left-4 z-40 md:hidden bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white p-2 rounded shadow"
         onClick={() => setOpen(true)}
         aria-label="Open sidebar"
       >
@@ -30,7 +30,7 @@ const Sidebar = () => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-30 md:hidden"
+          className="fixed inset-0 bg-black/20 dark:bg-black/40 z-30 md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
@@ -38,7 +38,7 @@ const Sidebar = () => {
       {/* Sidebar Drawer */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-64 bg-gray-800 text-white p-6 z-40
+          fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-6 z-40
           transform transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"}
           md:static md:translate-x-0 md:w-64 md:block
@@ -47,7 +47,7 @@ const Sidebar = () => {
       >
         {/* Close button for mobile */}
         <button
-          className="absolute top-4 right-4 md:hidden text-white"
+          className="absolute top-4 right-4 md:hidden text-gray-800 dark:text-white"
           onClick={() => setOpen(false)}
           aria-label="Close sidebar"
         >
@@ -60,11 +60,12 @@ const Sidebar = () => {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`${
-                    pathname === link.href
-                      ? "text-white font-bold"
-                      : "text-gray-300 hover:text-white"
-                  } transition-colors`}
+                  className={`block px-2 py-1 rounded transition-colors
+                    ${
+                      pathname === link.href
+                        ? "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-bold"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    }`}
                   onClick={() => setOpen(false)}
                 >
                   {link.label}

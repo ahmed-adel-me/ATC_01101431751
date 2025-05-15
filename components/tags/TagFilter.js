@@ -41,7 +41,7 @@ export default function TagFilter({ tags }) {
       <div className="flex items-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 px-4 py-1 shadow-sm">
         <div className="flex items-center gap-2 min-w-max">
           <FaTag className="text-purple-400" />
-          <span className="font-semibold text-purple-400 text-base uppercase tracking-wide">
+          <span className="font-semibold text-purple-500 text-base uppercase tracking-wide">
             Tags
           </span>
         </div>
@@ -53,7 +53,7 @@ export default function TagFilter({ tags }) {
               ${
                 selected.length === 0
                   ? "bg-purple-600 text-white border-purple-600 shadow"
-                  : "bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-purple-600 hover:text-white"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-purple-600 hover:text-white"
               }`}
           >
             All
@@ -66,7 +66,7 @@ export default function TagFilter({ tags }) {
                 ${
                   selected.includes(tag._id)
                     ? "bg-purple-600 text-white border-purple-600 shadow"
-                    : "bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-purple-600 hover:text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-purple-600 hover:text-white"
                 }`}
             >
               {tag.name}

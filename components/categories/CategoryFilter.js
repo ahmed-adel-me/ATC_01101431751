@@ -29,7 +29,7 @@ export default function CategoryFilter({ categories }) {
       <div className="flex flex-nowrap items-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 px-4 py-1 shadow-sm">
         <div className="flex items-center gap-2 min-w-max">
           <FaLayerGroup className="text-blue-400" />
-          <span className="font-semibold text-blue-400 text-base uppercase tracking-wide">
+          <span className="font-semibold text-blue-500 text-base uppercase tracking-wide">
             Categories
           </span>
         </div>
@@ -41,7 +41,7 @@ export default function CategoryFilter({ categories }) {
               ${
                 !current
                   ? "bg-blue-600 text-white border-blue-600 shadow"
-                  : "bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-blue-600 hover:text-white"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-blue-600 hover:text-white"
               }`}
           >
             All
@@ -54,7 +54,7 @@ export default function CategoryFilter({ categories }) {
                 ${
                   current === cat._id
                     ? "bg-blue-600 text-white border-blue-600 shadow"
-                    : "bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 hover:bg-blue-600 hover:text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 hover:bg-blue-600 hover:text-white"
                 }`}
             >
               {cat.name}
