@@ -8,9 +8,9 @@ import { Cairo } from "next/font/google";
 export const metadata = {
   title: "Event Booking System",
 };
-const cairo = Cairo({
+export const cairo = Cairo({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 export default async function RootLayout({ children }) {
   const locale = await getLocale();
