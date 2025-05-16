@@ -10,7 +10,7 @@ export const metadata = {
 };
 export const cairo = Cairo({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: [ "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 export default async function RootLayout({ children }) {
   const locale = await getLocale();
