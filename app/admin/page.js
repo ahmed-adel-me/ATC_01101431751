@@ -1,12 +1,12 @@
 import { getAllEvents } from "@/actions/eventActions";
+import { getTotalUsers } from "@/actions/userActions";
 import { getTranslations } from "next-intl/server";
 
 const AdminPage = async () => {
   // Fetch events data
   const { total: totalEvents, events } = await getAllEvents();
   const t = await getTranslations("admin");
-
-  const totalUsers = 120; // Replace with actual user count
+  const totalUsers = await getTotalUsers(); // Replace with actual user count
   const totalRevenue = events.reduce((sum, event) => sum + event.price, 0); // Sum of event prices
 
   return (
