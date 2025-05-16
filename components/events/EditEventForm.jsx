@@ -9,6 +9,7 @@ import CategorySelect from "./CategorySelect";
 import TagsMultiSelect from "./TagsMultiSelect";
 import Spinner from "../Spinner";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function EditEventForm({ event }) {
   const t = useTranslations("editEvent");
@@ -175,14 +176,21 @@ export default function EditEventForm({ event }) {
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         <p className="text-sm text-gray-500 mt-1">{t("leaveEmpty")}</p>
-        <div className="mt-2">
-          <span className="text-sm text-gray-500">{t("currentImage")}</span>
-          <img
-            src={event.image}
-            alt={event.title}
-            className="w-32 h-32 object-cover mb-2"
-          />
-        </div>
+        {event.image && (
+          <div className="mt-2">
+            <span className="text-sm text-gray-500">{t("currentImage")}</span>
+            <div className="relative w-32 h-32 mb-2">
+              <Image
+                src={event.image}
+                alt={event.title}
+                fill
+                className="object-cover rounded"
+                sizes="128px"
+              />
+            </div>
+          </div>
+        )}
+        {errors.image && <p className="text-red-500">{errors.image.message}</p>}
       </div>
 
       <button

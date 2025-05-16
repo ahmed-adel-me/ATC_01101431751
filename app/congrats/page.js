@@ -6,7 +6,7 @@ export default async function CongratsPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 text-center p-6">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 max-w-md">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 min-w-md">
         <h1 className="text-4xl font-bold text-green-600 dark:text-green-400 mb-4">
           {t("title")}
         </h1>

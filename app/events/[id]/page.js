@@ -4,6 +4,7 @@ import BookNowButton from "@/components/bookings/BookNowButton";
 import Spinner from "@/components/Spinner";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 export default async function EventPage({ params }) {
   const t = await getTranslations("event");
@@ -22,12 +23,13 @@ export default async function EventPage({ params }) {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-6 lg:px-20">
       <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         {/* Event Image */}
-        <div className="relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div className="relative w-full h-[400px]">
+          <Image
             src={event.image}
             alt={event.title}
-            className="w-full h-[400px] object-cover"
+            layout="fill"
+            objectFit="cover"
+            priority
           />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
             <h1 className="text-4xl font-bold text-white">{event.title}</h1>

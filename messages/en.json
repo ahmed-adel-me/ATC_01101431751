@@ -98,7 +98,7 @@
     "deleting": "Deleting..."
   },
   "editEvent": {
-    "editTitle": "Edit Event",
+    "title": "Edit Event",
     "notFound": "Event not found.",
     "success": "Event updated successfully!",
     "error": "Failed to update event.",

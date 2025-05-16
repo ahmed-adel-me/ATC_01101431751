@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 export default async function EditPage({ params }) {
   const t = await getTranslations("editEvent");
-  const { id } = params;
+  const { id } = await params;
   const event = await getEventById(id);
 
   if (!event) {

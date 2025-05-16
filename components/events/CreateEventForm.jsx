@@ -143,7 +143,7 @@ export default function CreateEventForm() {
         <label className="block font-medium mb-1">{t("form.image")}</label>
         <input
           type="file"
-          {...register("image", { required: t("form.imageRequired") })}
+          {...register("image")}
           accept="image/*"
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />

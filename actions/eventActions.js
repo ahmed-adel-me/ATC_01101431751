@@ -6,7 +6,6 @@ import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { uploadImage, deleteImage } from "@/lib/utils/imageHandler";
 // Server action to get all events
 export const getAllEvents = async (searchParams = {}) => {
-
   const { category, tags = [], page = 1 } = searchParams;
 
   try {
@@ -71,11 +70,12 @@ export const createEvent = async (formData) => {
     await dbConnect();
 
     const image = formData.get("image");
-    if (!image || typeof image === "string") {
-      throw new Error("Invalid image file");
-    }
+    let imageUrl = undefined;
 
-    const imageUrl = await uploadImage(image);
+    // Only upload if an image file is provided
+    if (image && typeof image !== "string") {
+      imageUrl = await uploadImage(image);
+    }
 
     let tags = formData.getAll("tags");
     if (tags.length === 1 && tags[0] === "") tags = [];
@@ -87,9 +87,13 @@ export const createEvent = async (formData) => {
       venue: formData.get("venue"),
       date: formData.get("date"),
       price: Number(formData.get("price")),
-      image: imageUrl,
       tags,
     };
+
+    // Only add image field if an image was uploaded
+    if (imageUrl) {
+      eventData.image = imageUrl;
+    }
 
     await Event.create(eventData);
   } catch (error) {
@@ -121,6 +125,7 @@ export async function editEvent(id, formData) {
       price: Number(price),
     };
 
+    // Only update image if a new file is provided
     if (image && typeof image !== "string") {
       const existingEvent = await Event.findById(id);
       if (!existingEvent) throw new Error("Event not found");
