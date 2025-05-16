@@ -1,0 +1,171 @@
+{
+  "navbar": {
+    "home": "Home",
+    "admin": "Admin",
+    "login": "Login",
+    "signup": "Signup",
+    "signOut": "Sign Out",
+    "signingOut": "Signing Out",
+    "loading": "Loading..."
+  },
+  "homePage": {
+    "title": "Upcoming Events",
+    "category": "Category",
+    "tag": "Tag",
+    "all": "All"
+  },
+  "event": {
+    "notFound": "Event not found",
+    "date": "Date",
+    "venue": "Venue",
+    "category": "Category",
+    "price": "Price",
+    "bookNow": "Book Now",
+    "alreadyBooked": "Already Booked",
+    "booked": "✔ Booked",
+    "at": "at"
+  },
+  "congrats": {
+    "title": "🎉 Congratulations!",
+    "message": "Your event has been successfully booked.",
+    "back": "Back to Events"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "login": {
+    "title": "Log In",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Log In",
+    "invalid": "Invalid email or password. Please try again.",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign Up"
+  },
+  "signup": {
+    "title": "Create an Account",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "nameRequired": "Name is required",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "emailRequired": "Email is required",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "passwordRequired": "Password is required",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordsNotMatch": "Passwords do not match",
+    "submit": "Sign Up",
+    "success": "Account created successfully!",
+    "errorSignIn": "Error signing in. Please try logging in manually.",
+    "errorCreate": "Error creating account. Please try again.",
+    "haveAccount": "Already have an account?",
+    "login": "Login"
+  },
+  "sidebar": {
+    "adminPanel": "Admin Panel",
+    "dashboard": "Dashboard",
+    "manageEvents": "Manage Events",
+    "manageCategories": "Manage Categories",
+    "manageTags": "Manage Tags"
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "welcome": "Welcome to the admin panel. Manage your events and view statistics here.",
+    "totalEvents": "Total Events",
+    "totalUsers": "Total Users",
+    "totalRevenue": "Total Revenue"
+  },
+  "adminEvents": {
+    "title": "Manage Events",
+    "createButton": "+ Create Event",
+    "noEvents": "No events found."
+  },
+  "eventCard": {
+    "edit": "Edit"
+  },
+  "deleteEvent": {
+    "confirm": "Are you sure you want to delete this event?",
+    "error": "Failed to delete event.",
+    "button": "Delete",
+    "deleting": "Deleting..."
+  },
+  "editEvent": {
+    "editTitle": "Edit Event",
+    "notFound": "Event not found.",
+    "success": "Event updated successfully!",
+    "error": "Failed to update event.",
+    "updating": "Updating...",
+    "update": "Update Event",
+    "leaveEmpty": "Leave empty to keep current image.",
+    "currentImage": "Current Image:",
+    "form": {
+      "title": "Title",
+      "titleRequired": "Title is required",
+      "description": "Description",
+      "descriptionRequired": "Description is required",
+      "category": "Category",
+      "venue": "Venue",
+      "venueRequired": "Venue is required",
+      "date": "Date",
+      "dateRequired": "Date is required",
+      "price": "Price",
+      "priceRequired": "Price is required",
+      "priceNonNegative": "Price must be non-negative",
+      "image": "Image"
+    }
+  },
+  "createEvent": {
+    "title": "Create Event",
+    "success": "Event created successfully!",
+    "error": "Event creation failed.",
+    "creating": "Creating...",
+    "form": {
+      "title": "Title",
+      "titleRequired": "Title is required",
+      "description": "Description",
+      "descriptionRequired": "Description is required",
+      "category": "Category",
+      "venue": "Venue",
+      "venueRequired": "Venue is required",
+      "date": "Date",
+      "dateRequired": "Date is required",
+      "price": "Price",
+      "priceRequired": "Price is required",
+      "priceNonNegative": "Price must be non-negative",
+      "image": "Image",
+      "imageRequired": "Image is required"
+    }
+  },
+  "categorySelect": {
+    "label": "Category",
+    "required": "Category is required",
+    "select": "Select Category"
+  },
+  "tagsMultiSelect": {
+    "label": "Tags",
+    "select": "Select tags",
+    "noTags": "No tags available"
+  },
+  "categories": {
+    "manage": "Manage Categories",
+    "add": "Add",
+    "newPlaceholder": "New category name",
+    "noCategories": "No categories yet.",
+    "delete": "Delete"
+  },
+  "tags": {
+    "manage": "Manage Tags",
+    "add": "Add",
+    "newPlaceholder": "New tag name",
+    "noTags": "No tags yet.",
+    "delete": "Delete"
+  }
+}

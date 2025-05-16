@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { checkIfBooked } from "@/actions/bookingActions";
+import { getTranslations } from "next-intl/server";
 
 export default async function EventCard({ event }) {
   const isBooked = await checkIfBooked(event._id);
+  const t = await getTranslations("event");
 
   return (
     <Link
@@ -29,7 +31,7 @@ export default async function EventCard({ event }) {
 
       {/* Event Date and Venue */}
       <p className="text-sm text-gray-500 dark:text-gray-300 mt-2">
-        {new Date(event.date).toLocaleDateString()} at {event.venue}
+        {new Date(event.date).toLocaleDateString()} {t("at")} {event.venue}
       </p>
 
       {/* Event Price */}
@@ -45,7 +47,7 @@ export default async function EventCard({ event }) {
             : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
         }`}
       >
-        {isBooked ? "✔ Booked" : "Book Now"}
+        {isBooked ? t("booked") : t("bookNow")}
       </div>
     </Link>
   );

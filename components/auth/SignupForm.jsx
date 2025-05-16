@@ -4,8 +4,10 @@ import { signup } from "@/actions/authActions";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import Spinner from "../Spinner";
+import { useTranslations } from "next-intl";
 
 export default function SignupForm() {
+  const t = useTranslations("signup");
   const {
     register,
     handleSubmit,
@@ -16,7 +18,7 @@ export default function SignupForm() {
   const onSubmit = async (data) => {
     const res = await signup(data);
     if (res.status === 200) {
-      alert("Account created successfully!");
+      alert(t("success"));
 
       // Automatically sign in the user
       const signInResponse = await signIn("credentials", {
@@ -27,10 +29,10 @@ export default function SignupForm() {
       });
 
       if (signInResponse?.error) {
-        alert("Error signing in. Please try logging in manually.");
+        alert(t("errorSignIn"));
       }
     } else {
-      alert("Error creating account. Please try again.");
+      alert(t("errorCreate"));
     }
   };
 
@@ -41,22 +43,20 @@ export default function SignupForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 space-y-6"
     >
-      <h2 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-2">
-        Create an Account
-      </h2>
-
       {/* Name */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-          Name
+          {t("name")}
         </label>
         <input
           type="text"
-          {...register("name", { required: "Name is required" })}
+          {...register("name", { required: t("nameRequired") })}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.name ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.name
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
-          placeholder="Your name"
+          placeholder={t("namePlaceholder")}
         />
         {errors.name && (
           <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
@@ -66,15 +66,17 @@ export default function SignupForm() {
       {/* Email */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-          Email
+          {t("email")}
         </label>
         <input
           type="email"
-          {...register("email", { required: "Email is required" })}
+          {...register("email", { required: t("emailRequired") })}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.email ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.email
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
-          placeholder="you@email.com"
+          placeholder={t("emailPlaceholder")}
         />
         {errors.email && (
           <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
@@ -84,15 +86,17 @@ export default function SignupForm() {
       {/* Password */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-          Password
+          {t("password")}
         </label>
         <input
           type="password"
-          {...register("password", { required: "Password is required" })}
+          {...register("password", { required: t("passwordRequired") })}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.password ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.password
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
-          placeholder="Password"
+          placeholder={t("passwordPlaceholder")}
         />
         {errors.password && (
           <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
@@ -102,18 +106,20 @@ export default function SignupForm() {
       {/* Confirm Password */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-          Confirm Password
+          {t("confirmPassword")}
         </label>
         <input
           type="password"
           {...register("confirmPassword", {
-            required: "Please confirm your password",
-            validate: (value) => value === password || "Passwords do not match",
+            required: t("confirmPasswordRequired"),
+            validate: (value) => value === password || t("passwordsNotMatch"),
           })}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.confirmPassword ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.confirmPassword
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
-          placeholder="Confirm password"
+          placeholder={t("confirmPasswordPlaceholder")}
         />
         {errors.confirmPassword && (
           <p className="text-xs text-red-500 mt-1">
@@ -127,7 +133,7 @@ export default function SignupForm() {
         disabled={isSubmitting}
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 flex justify-center gap-2 items-center transition"
       >
-        <span>Sign Up</span>
+        <span>{t("submit")}</span>
         {isSubmitting && <Spinner className="border-white" size={15} />}
       </button>
     </form>

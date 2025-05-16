@@ -4,8 +4,10 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Spinner from "../Spinner";
+import { useTranslations } from "next-intl";
 
 export default function LoginForm() {
+  const t = useTranslations("login");
   const {
     register,
     handleSubmit,
@@ -21,7 +23,7 @@ export default function LoginForm() {
     });
 
     if (result?.error) {
-      setError("Invalid email or password. Please try again.");
+      setError(t("invalid"));
     } else {
       window.location.href = "/";
     }
@@ -32,9 +34,7 @@ export default function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 space-y-6"
     >
-      <h2 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-2">
-        Log In
-      </h2>
+    
 
       {error && <p className="text-sm text-red-500 text-center">{error}</p>}
 
@@ -44,15 +44,17 @@ export default function LoginForm() {
           htmlFor="email"
           className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
         >
-          Email
+          {t("email")}
         </label>
         <input
           type="email"
           id="email"
-          {...register("email", { required: "Email is required" })}
-          placeholder="Enter your email"
+          {...register("email", { required: t("emailRequired") })}
+          placeholder={t("emailPlaceholder")}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.email ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.email
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
         />
         {errors.email && (
@@ -66,15 +68,17 @@ export default function LoginForm() {
           htmlFor="password"
           className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
         >
-          Password
+          {t("password")}
         </label>
         <input
           type="password"
           id="password"
-          {...register("password", { required: "Password is required" })}
-          placeholder="Enter your password"
+          {...register("password", { required: t("passwordRequired") })}
+          placeholder={t("passwordPlaceholder")}
           className={`mt-1 block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 transition ${
-            errors.password ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+            errors.password
+              ? "border-red-500"
+              : "border-gray-300 dark:border-gray-700"
           }`}
         />
         {errors.password && (
@@ -87,7 +91,7 @@ export default function LoginForm() {
         disabled={isSubmitting}
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 flex justify-center gap-2 items-center transition"
       >
-        <span>Log In</span>
+        <span>{t("submit")}</span>
         {isSubmitting && <Spinner className="border-white" size={15} />}
       </button>
     </form>

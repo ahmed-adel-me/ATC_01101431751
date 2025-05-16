@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useCallback } from "react";
 import { FaTag } from "react-icons/fa";
@@ -9,7 +10,7 @@ export default function TagFilter({ tags }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const selected = searchParams.getAll("tags");
-
+  const t = useTranslations("homePage");
   const handleToggle = useCallback(
     (tagId) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -42,7 +43,7 @@ export default function TagFilter({ tags }) {
         <div className="flex items-center gap-2 min-w-max">
           <FaTag className="text-purple-400" />
           <span className="font-semibold text-purple-500 text-base uppercase tracking-wide">
-            Tags
+            {t("tag")}
           </span>
         </div>
         <div className="h-6 border-l border-gray-300 dark:border-gray-600 mx-3" />
@@ -56,7 +57,7 @@ export default function TagFilter({ tags }) {
                   : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-purple-600 hover:text-white"
               }`}
           >
-            All
+            {t("all")}
           </button>
           {tags.map((tag) => (
             <button

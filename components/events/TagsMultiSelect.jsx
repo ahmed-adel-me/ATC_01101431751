@@ -1,4 +1,5 @@
-const { useState, useEffect } = require("react");
+import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
 
 export default function TagsMultiSelect({
   tags,
@@ -6,6 +7,7 @@ export default function TagsMultiSelect({
   setValue,
   error,
 }) {
+  const t = useTranslations("tagsMultiSelect");
   const [open, setOpen] = useState(false);
 
   const handleTagToggle = (tagId) => {
@@ -29,7 +31,7 @@ export default function TagsMultiSelect({
 
   return (
     <div>
-      <label className="block font-medium mb-1">Tags</label>
+      <label className="block font-medium mb-1">{t("label")}</label>
       <div className="relative tags-dropdown">
         <button
           type="button"
@@ -37,7 +39,7 @@ export default function TagsMultiSelect({
           onClick={() => setOpen((v) => !v)}
         >
           {selectedTags.length === 0
-            ? "Select tags"
+            ? t("select")
             : tags
                 .filter((tag) => selectedTags.includes(tag._id))
                 .map((tag) => tag.name)
@@ -60,7 +62,7 @@ export default function TagsMultiSelect({
               </label>
             ))}
             {tags.length === 0 && (
-              <div className="px-3 py-2 text-gray-500">No tags available</div>
+              <div className="px-3 py-2 text-gray-500">{t("noTags")}</div>
             )}
           </div>
         )}

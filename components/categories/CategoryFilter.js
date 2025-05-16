@@ -3,13 +3,14 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useCallback } from "react";
 import { FaLayerGroup } from "react-icons/fa";
+import { useTranslations } from "use-intl";
 
 export default function CategoryFilter({ categories }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const current = searchParams.get("category");
-
+  const t = useTranslations("homePage");
   const handleClick = useCallback(
     (val) => {
       const params = new URLSearchParams(searchParams);
@@ -30,7 +31,7 @@ export default function CategoryFilter({ categories }) {
         <div className="flex items-center gap-2 min-w-max">
           <FaLayerGroup className="text-blue-400" />
           <span className="font-semibold text-blue-500 text-base uppercase tracking-wide">
-            Categories
+            {t("category")}
           </span>
         </div>
         <div className="h-6 border-l border-gray-300 dark:border-gray-600 mx-3" />
@@ -44,7 +45,7 @@ export default function CategoryFilter({ categories }) {
                   : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-blue-600 hover:text-white"
               }`}
           >
-            All
+            {t("all")}
           </button>
           {categories.map((cat) => (
             <button

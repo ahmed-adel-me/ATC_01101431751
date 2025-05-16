@@ -3,15 +3,17 @@ import { getEventById } from "@/actions/eventActions";
 import BookNowButton from "@/components/bookings/BookNowButton";
 import Spinner from "@/components/Spinner";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 
 export default async function EventPage({ params }) {
+  const t = await getTranslations("event");
   const { id } = await params;
   const event = await getEventById(id);
 
   if (!event) {
     return (
       <div className="text-center text-red-600 text-xl mt-10">
-        Event not found
+        {t("notFound")}
       </div>
     );
   }
@@ -36,26 +38,27 @@ export default async function EventPage({ params }) {
         <div className="p-8">
           <div className="flex flex-wrap gap-6 mb-6">
             <p className="text-lg text-gray-700 dark:text-gray-300">
-              <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+              <strong>{t("date")}:</strong>{" "}
+              {new Date(event.date).toLocaleDateString()}
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300">
-              <strong>Venue:</strong> {event.venue}
+              <strong>{t("venue")}:</strong> {event.venue}
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300">
-              <strong>Category:</strong> {event.category}
+              <strong>{t("category")}:</strong> {event.category}
             </p>
           </div>
           <p className="text-gray-800 dark:text-gray-300 mb-6 text-lg leading-relaxed">
             {event.description}
           </p>
           <p className="text-3xl font-bold text-green-600 dark:text-green-400 mb-6">
-            ${event.price}
+            {t("price")}: ${event.price}
           </p>
 
           {/* Book Now Button */}
           <div className="flex justify-center">
             <Suspense fallback={<Spinner size={50} />}>
-              <BookNowButton eventId={event._id} />
+              <BookNowButton eventId={event._id}>{t("bookNow")}</BookNowButton>
             </Suspense>
           </div>
         </div>

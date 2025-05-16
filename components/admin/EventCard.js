@@ -1,7 +1,10 @@
 import Link from "next/link";
 import DeleteEventButton from "@/components/events/DeleteEventButton";
+import { useTranslations } from "next-intl";
 
 function EventCard({ event }) {
+  const t = useTranslations("eventCard");
+
   return (
     <div className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-xl shadow-sm hover:shadow-lg transition-shadow flex flex-col overflow-hidden group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -30,7 +33,7 @@ function EventCard({ event }) {
             href={`/admin/events/edit/${event._id}`}
             className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400 transition font-semibold text-center"
           >
-            Edit
+            {t("edit")}
           </Link>
           <DeleteEventButton
             eventId={event._id}

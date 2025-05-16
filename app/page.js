@@ -5,16 +5,19 @@ import CategoryFilter from "@/components/categories/CategoryFilter";
 import TagFilter from "@/components/tags/TagFilter";
 import { GetTags } from "@/actions/tagActions";
 import Pagination from "@/components/events/Pagination";
+import { getTranslations } from "next-intl/server";
 
 export default async function Home(props) {
   const searchParams = await props.searchParams;
   const { events, page, totalPages } = await getAllEvents(searchParams);
   const categories = await GetCategories();
   const tags = await GetTags();
+  const t = await getTranslations("homePage");
+
   return (
     <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-6">
       <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">
-        Upcoming Events
+        {t("title")}
       </h1>
       <div className="flex flex-col gap-1 mb-4">
         <CategoryFilter categories={categories} />

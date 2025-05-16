@@ -2,13 +2,27 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { getLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { Cairo } from "next/font/google";
 export const metadata = {
   title: "Event Booking System",
 };
+const cairo = Cairo({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+export default async function RootLayout({ children }) {
+  const locale = await getLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr"; // Set direction based on locale
 
-export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={dir}
+      className={cairo.className}
+      suppressHydrationWarning
+    >
       <AuthProvider>
         <body className="dark:bg-gray-900 dark:text-white bg-white text-black transition-colors duration-300 flex flex-col h-screen overflow-hidden">
           <ThemeProvider
@@ -17,10 +31,12 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <div>
-              <Navbar />
-            </div>
-            <div className=" flex-1 overflow-scroll">{children}</div>
+            <NextIntlClientProvider>
+              <div>
+                <Navbar />
+              </div>
+              <div className="flex-1 overflow-scroll">{children}</div>
+            </NextIntlClientProvider>
           </ThemeProvider>
         </body>
       </AuthProvider>

@@ -1,15 +1,17 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { createEvent } from "@/actions/eventActions";
 import { GetCategories } from "@/actions/categoryActions";
 import { GetTags } from "@/actions/tagActions";
 import CategorySelect from "./CategorySelect";
 import TagsMultiSelect from "./TagsMultiSelect";
+import { useTranslations } from "next-intl";
 
 // Main Form Component
 export default function CreateEventForm() {
+  const t = useTranslations("createEvent");
   const {
     register,
     handleSubmit,
@@ -47,11 +49,11 @@ export default function CreateEventForm() {
     }
     try {
       await createEvent(formData);
-      alert("Event created successfully!");
+      alert(t("success"));
       reset();
     } catch (error) {
       console.error("Event creation failed:", error);
-      alert("Event creation failed.");
+      alert(t("error"));
     }
   };
 
@@ -61,26 +63,33 @@ export default function CreateEventForm() {
       className="space-y-5 max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-400 text-center">
-        Create Event
+        {t("title")}
       </h2>
 
       <div>
-        <label className="block font-medium mb-1">Title</label>
+        <label className="block font-medium mb-1">{t("form.title")}</label>
         <input
-          {...register("title", { required: "Title is required" })}
-          placeholder="Title"
+          {...register("title", { required: t("form.titleRequired") })}
+          placeholder={t("form.title")}
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Description</label>
+        <label className="block font-medium mb-1">
+          {t("form.description")}
+        </label>
         <textarea
-          {...register("description", { required: "Description is required" })}
-          placeholder="Description"
+          {...register("description", {
+            required: t("form.descriptionRequired"),
+          })}
+          placeholder={t("form.description")}
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
+        )}
       </div>
 
       <CategorySelect
@@ -97,44 +106,44 @@ export default function CreateEventForm() {
       />
 
       <div>
-        <label className="block font-medium mb-1">Venue</label>
+        <label className="block font-medium mb-1">{t("form.venue")}</label>
         <input
-          {...register("venue", { required: "Venue is required" })}
-          placeholder="Venue"
+          {...register("venue", { required: t("form.venueRequired") })}
+          placeholder={t("form.venue")}
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.venue && <p className="text-red-500">{errors.venue.message}</p>}
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Date</label>
+        <label className="block font-medium mb-1">{t("form.date")}</label>
         <input
           type="date"
-          {...register("date", { required: "Date is required" })}
+          {...register("date", { required: t("form.dateRequired") })}
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Price</label>
+        <label className="block font-medium mb-1">{t("form.price")}</label>
         <input
           type="number"
           {...register("price", {
-            required: "Price is required",
-            min: { value: 0, message: "Price must be non-negative" },
+            required: t("form.priceRequired"),
+            min: { value: 0, message: t("form.priceNonNegative") },
           })}
-          placeholder="Price"
+          placeholder={t("form.price")}
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.price && <p className="text-red-500">{errors.price.message}</p>}
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Image</label>
+        <label className="block font-medium mb-1">{t("form.image")}</label>
         <input
           type="file"
-          {...register("image", { required: "Image is required" })}
+          {...register("image", { required: t("form.imageRequired") })}
           accept="image/*"
           className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
@@ -146,7 +155,7 @@ export default function CreateEventForm() {
         disabled={isSubmitting}
         className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50 transition"
       >
-        {isSubmitting ? "Creating..." : "Create Event"}
+        {isSubmitting ? t("creating") : t("title")}
       </button>
     </form>
   );

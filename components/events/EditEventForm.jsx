@@ -8,7 +8,10 @@ import { GetTags } from "@/actions/tagActions";
 import CategorySelect from "./CategorySelect";
 import TagsMultiSelect from "./TagsMultiSelect";
 import Spinner from "../Spinner";
+import { useTranslations } from "next-intl";
+
 export default function EditEventForm({ event }) {
+  const t = useTranslations("editEvent");
   const {
     register,
     handleSubmit,
@@ -37,21 +40,19 @@ export default function EditEventForm({ event }) {
   useEffect(() => {
     (async () => {
       try {
-        const cats = await GetCategories();
-        const tgs = await GetTags();
-        setCategories(cats);
-        setTags(tgs);
+        setCategories(await GetCategories());
+        setTags(await GetTags());
       } catch (err) {
         console.error("Failed to fetch categories or tags:", err);
       }
     })();
   }, []);
+
   const onSubmit = async (data) => {
     setServerError(null);
     setSuccess(null);
 
     const formData = new FormData();
-
     for (const key in data) {
       if (key === "image" && data.image && data.image[0]) {
         formData.append("image", data.image[0]);
@@ -64,10 +65,11 @@ export default function EditEventForm({ event }) {
 
     try {
       await editEvent(event._id, formData);
-      setSuccess("Event updated successfully.");
+      setSuccess(t("success"));
+      // Optionally reset the form or refetch event data here
     } catch (err) {
       console.error(err);
-      setServerError("Failed to update event.");
+      setServerError(t("error"));
     }
   };
 
@@ -80,33 +82,48 @@ export default function EditEventForm({ event }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-5 max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
+    >
+      <h2 className="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-400 text-center">
+        {t("title")}
+      </h2>
+
       {serverError && <p className="text-red-500">{serverError}</p>}
       {success && <p className="text-green-500">{success}</p>}
 
       <div>
+        <label className="block font-medium mb-1">{t("form.title")}</label>
         <input
-          {...register("title", { required: "Title is required" })}
-          placeholder="Title"
-          className="w-full border p-2"
+          {...register("title", { required: t("form.titleRequired") })}
+          placeholder={t("form.title")}
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
       </div>
 
       <div>
+        <label className="block font-medium mb-1">
+          {t("form.description")}
+        </label>
         <textarea
-          {...register("description")}
-          placeholder="Description"
-          className="w-full border p-2"
+          {...register("description", {
+            required: t("form.descriptionRequired"),
+          })}
+          placeholder={t("form.description")}
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
+        )}
       </div>
-      {categories.length > 0 && (
-        <CategorySelect
-          categories={categories}
-          register={register}
-          error={errors.category}
-        />
-      )}
+
+      <CategorySelect
+        categories={categories}
+        register={register}
+        error={errors.category}
+      />
 
       <TagsMultiSelect
         tags={tags}
@@ -116,60 +133,64 @@ export default function EditEventForm({ event }) {
       />
 
       <div>
+        <label className="block font-medium mb-1">{t("form.venue")}</label>
         <input
-          {...register("venue", { required: "Venue is required" })}
-          placeholder="Venue"
-          className="w-full border p-2"
+          {...register("venue", { required: t("form.venueRequired") })}
+          placeholder={t("form.venue")}
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.venue && <p className="text-red-500">{errors.venue.message}</p>}
       </div>
 
       <div>
+        <label className="block font-medium mb-1">{t("form.date")}</label>
         <input
           type="date"
-          {...register("date", { required: "Date is required" })}
-          className="w-full border p-2"
+          {...register("date", { required: t("form.dateRequired") })}
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
       </div>
 
       <div>
+        <label className="block font-medium mb-1">{t("form.price")}</label>
         <input
           type="number"
           {...register("price", {
-            required: "Price is required",
-            valueAsNumber: true,
+            required: t("form.priceRequired"),
+            min: { value: 0, message: t("form.priceNonNegative") },
           })}
-          placeholder="Price"
-          className="w-full border p-2"
+          placeholder={t("form.price")}
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
         {errors.price && <p className="text-red-500">{errors.price.message}</p>}
       </div>
 
       <div>
-        <p className="text-sm text-gray-500 mb-1">Current Image:</p>
-        <img
-          src={event.image}
-          alt={event.title}
-          className="w-32 h-32 object-cover mb-2"
-        />
+        <label className="block font-medium mb-1">{t("form.image")}</label>
         <input
           type="file"
           {...register("image")}
           accept="image/*"
-          className="w-full border p-2"
+          className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-400"
         />
-        <p className="text-sm text-gray-500">
-          Leave empty to keep current image.
-        </p>
+        <p className="text-sm text-gray-500 mt-1">{t("leaveEmpty")}</p>
+        <div className="mt-2">
+          <span className="text-sm text-gray-500">{t("currentImage")}</span>
+          <img
+            src={event.image}
+            alt={event.title}
+            className="w-32 h-32 object-cover mb-2"
+          />
+        </div>
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50 transition"
       >
-        {isSubmitting ? "Updating..." : "Update Event"}
+        {isSubmitting ? t("updating") : t("update")}
       </button>
     </form>
   );

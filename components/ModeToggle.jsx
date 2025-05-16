@@ -20,12 +20,15 @@ export function ModeToggle() {
       type="button"
     >
       <FaSun
-        className={`h-5 w-5 text-yellow-500 transition-all duration-300 ${isDark ? "opacity-0 scale-0 absolute" : "opacity-100 scale-100"}`}
+        className={`h-5 w-5 text-yellow-500 transition-all duration-300 ${
+          isDark ? "opacity-0 scale-0 absolute" : "opacity-100 scale-100"
+        }`}
       />
       <FaMoon
-        className={`h-5 w-5 text-gray-700 dark:text-gray-200 transition-all duration-300 ${isDark ? "opacity-100 scale-100" : "opacity-0 scale-0 absolute"}`}
+        className={`h-5 w-5 text-gray-700 dark:text-gray-200 transition-all duration-300 ${
+          isDark ? "opacity-100 scale-100" : "opacity-0 scale-0 absolute"
+        }`}
       />
-      <span className="sr-only">Toggle theme</span>
     </button>
   );
 }

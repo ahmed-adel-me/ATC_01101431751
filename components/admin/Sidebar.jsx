@@ -3,17 +3,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 const Sidebar = () => {
+  const t = useTranslations("sidebar");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const links = [
-    { href: "/admin", label: "Dashboard" },
-    { href: "/admin/events", label: "Manage Events" },
-    { href: "/admin/categories", label: "Manage Categories" },
-    { href: "/admin/tags", label: "Manage Tags" },
-    // { href: "/admin/users", label: "Manage Users" },
+    { href: "/admin", label: t("dashboard") },
+    { href: "/admin/events", label: t("manageEvents") },
+    { href: "/admin/categories", label: t("manageCategories") },
+    { href: "/admin/tags", label: t("manageTags") },
+    // { href: "/admin/users", label: t("manageUsers") },
   ];
 
   return (
@@ -53,7 +55,7 @@ const Sidebar = () => {
         >
           <FaTimes size={22} />
         </button>
-        <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
+        <h2 className="text-xl font-bold mb-6">{t("adminPanel")}</h2>
         <nav>
           <ul className="space-y-4">
             {links.map((link) => (

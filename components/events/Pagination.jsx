@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 function getPageNumbers(current, total) {
   if (total <= 7) {
@@ -19,6 +20,7 @@ export default function Pagination({ page, totalPages }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const t = useTranslations("pagination");
 
   const setPage = (newPage) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -37,7 +39,7 @@ export default function Pagination({ page, totalPages }) {
           <button
             onClick={() => setPage(page - 1)}
             disabled={page <= 1}
-            aria-label="Previous page"
+            aria-label={t("previous")}
             className={`px-4 py-2 border border-gray-300 dark:border-gray-700 font-semibold transition-colors duration-200
               ${
                 page <= 1
@@ -45,7 +47,7 @@ export default function Pagination({ page, totalPages }) {
                   : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300"
               }`}
           >
-            Previous
+            {t("previous")}
           </button>
         </li>
         {pageNumbers.map((num, idx) =>
@@ -80,7 +82,7 @@ export default function Pagination({ page, totalPages }) {
           <button
             onClick={() => setPage(page + 1)}
             disabled={page >= totalPages}
-            aria-label="Next page"
+            aria-label={t("next")}
             className={`px-4 py-2 border border-gray-300 dark:border-gray-700 font-semibold transition-colors duration-200
               ${
                 page >= totalPages
@@ -88,7 +90,7 @@ export default function Pagination({ page, totalPages }) {
                   : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300"
               }`}
           >
-            Next
+            {t("next")}
           </button>
         </li>
       </ul>
