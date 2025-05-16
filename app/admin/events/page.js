@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 export default async function EventsPage(props) {
   const t = await getTranslations("adminEvents");
-  const searchParams = props.searchParams;
+  const searchParams = await props.searchParams;
   const { events, totalPages, page } = await getAllEvents(searchParams);
 
   return (
