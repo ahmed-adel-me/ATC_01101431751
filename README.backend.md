@@ -12,6 +12,7 @@ This backend system powers the **ATC\_01101431751** event booking application. I
 * **NextAuth.js** – User authentication with credentials provider.
 * **bcrypt** – For secure password hashing.
 * **Axios** – HTTP client used in frontend-to-backend communication.
+* **Cloudinary** – Image upload and hosting solution
 
 ---
 
@@ -24,7 +25,7 @@ This backend system powers the **ATC\_01101431751** event booking application. I
 │   ├── categoryActions.js      # CRUD logic for categories
 │   ├── eventActions.js         # Event-related database operations
 │   ├── tagActions.js           # CRUD logic for tags
-│   └── userActions.js          # User retrieval and admin checks
+│   └── userActions.js          # User statistics
 ├── app/
 │   └── api/
 │       ├── auth/
@@ -36,9 +37,11 @@ This backend system powers the **ATC\_01101431751** event booking application. I
 │       └── tags/
 ├── lib/
 │   ├── dbConnect.js             # MongoDB connection
-│   ├── auth/                    # NextAuth configuration logic
-│   │   └── authOptions.js
-│   └── utils/                   # Helper functions
+│   ├── auth/
+│   │   └── authOptions.js       # NextAuth config
+│   └── utils/
+│       ├── imageHandler.js      # Image upload via Cloudinary
+│       └── cloudinary.js        # Cloudinary config
 ├── models/
 │   ├── User.js
 │   ├── Event.js
@@ -75,7 +78,7 @@ Server actions are used as a modern and modular replacement for traditional REST
 
 * `getAllEvents(searchParams)`: Fetches filtered and paginated list of events by category and tags.
 * `getEventById(eventId)`: Retrieves a specific event by ID.
-* `createEvent(formData)`: Creates an event with optional image upload (admin only).
+* `createEvent(formData)`: Creates an event with optional image upload to Cloudinary (admin only).
 * `editEvent(id, formData)`: Edits an existing event, handles optional image replacement.
 * `deleteEvent(eventId)`: Deletes an event and its associated image (admin only).
 
@@ -142,8 +145,8 @@ Server actions are used as a modern and modular replacement for traditional REST
 
 ## 📄 Notes
 
-* Ensure MongoDB is up and running and credentials are valid
-* No file uploads are handled on the backend – images are stored locally via the frontend
+* Ensure MongoDB and Cloudinary credentials are valid and set in `.env.local`
+* Image uploads are handled via Cloudinary for scalability and CDN delivery
 * Admin vs User role enforcement is done at both route and UI level
 
 ---
