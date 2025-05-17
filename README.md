@@ -1,36 +1,167 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎫 Event Booking System
 
-## Getting Started
+A full-stack web application that allows users to browse and book events, while providing an admin panel for managing event listings. This project was developed as part of the **Areeb AI Task** using AI tools like ChatGPT and GitHub Copilot throughout the workflow.
 
-First, run the development server:
+---
+
+## 📦 Tech Stack
+
+* **Frontend:** Next.js 15 (App Router), Tailwind CSS, i18n (English + Arabic)
+* **Backend:** Next.js API routes (Server Actions), Mongoose ODM
+* **Authentication:** NextAuth.js with role-based access (Admin / User)
+* **Database:** MongoDB (Mongoose ODM)
+* **Storage:** Local file system for event images
+* **AI Tools:** ChatGPT, GitHub Copilot
+
+---
+
+## 🧰 Project Structure
+
+```
+📁 ATC_01101431751
+│
+├── app/                  # App directory (frontend & API routes)
+├── components/           # Shared React components
+├── lib/                  # Supabase client, server helpers
+├── i18n/                 # Multi-language support (EN/AR)
+├── public/               # Static assets
+├── middleware.ts         # Role-based route protection
+├── .env.local.example    # Example environment variable file
+├── README.md             # Main project documentation
+├── README.frontend.md       # Frontend-specific instructions
+├── README.backend.md        # Backend-specific instructions
+├── backend/README.md     # Backend-specific instructions
+```
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to run the project locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ahmed-adel-me/ATC_01101431751.git
+cd ATC_01101431751
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env.local` file in the root directory and add:
+
+```env
+NEXTAUTH_SECRET=your_auth_secret
+MONGODB_URI=your_mongodb_connection_uri
+```
+
+> 🔑 Replace with your own environment variables based on your local MongoDB and NextAuth setup.
+
+### 4. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build for production:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit `http://localhost:3000` in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Sub-Project Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The frontend and backend documentation are included in this root directory for convenience:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* 🧩 [Frontend Documentation](./README.frontend.md)
+* 🔧 [Backend Documentation](./README.backend.md)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 👥 Authentication
+
+* User registration and login (NextAuth)
+* Role-based access (Admin vs User)
+* Middleware-protected routes
+
+### 🎫 User Experience
+
+* Home page with event cards
+* "Book Now" button per event (shows "Booked" if already booked)
+* Detailed event page with booking functionality
+* Congratulations screen after booking
+
+### 🧾 Admin Panel
+
+* Add, update, delete events
+* Upload event images
+* View event categories and tags
+
+### 🌍 Internationalization
+
+* English and Arabic language support via i18n files
+
+---
+
+## 🌟 Optional & Bonus Features
+
+| Feature                | Status                             |
+| ---------------------- | ---------------------------------- |
+| Tags and Categories    | ✅ Implemented                      |
+| Booked Label UI        | ✅ Implemented                      |
+| Image Upload           | ✅ Local Storage                    |
+| Multi-language (EN/AR) | ✅ Implemented                      |
+| Responsive UI          | ✅ Fully responsive (Tailwind used) |
+| Pagination             | ✅ Implemented                      |
+| Unit Tests             | ❌ Not included                     |
+| Deployment             | ✅ Deployed on Vercel               |
+| Dark Mode              | ✅ Implemented                      |
+
+---
+
+## 🤖 AI Tools Used
+
+| Tool               | Description                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| **ChatGPT**        | Used for project architecture, Supabase setup, localization, and CRUD implementation guidance |
+| **GitHub Copilot** | Assisted in auto-completion for React components and Tailwind classes                         |
+
+---
+
+## 🌐 Live Demo
+
+The application is live at:
+
+🔗 [https://atc-01101431751.vercel.app](https://atc-01101431751.vercel.app)
+
+---
+
+## 📸 Screenshots
+
+> *Add actual screenshots before submission.*
+
+* Home Page (Event Listings)
+* Event Details Page
+* Booking Confirmation Page
+* Admin Panel (Dashboard)
+
+---
+
+## 📅 Submission Notes
+
+* Developed for the **Areeb AI Challenge – May 2025**.
+* AI tools were used actively throughout the development lifecycle.
+* Project meets the required feature set and structure described in the task.
