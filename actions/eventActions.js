@@ -51,9 +51,11 @@ export const getEventById = async (eventId) => {
   try {
     await dbConnect();
 
-    const event = await Event.findById(eventId).lean();
+    const event = await Event.findById(eventId)
+      .populate("category")
+      .populate("tags")
+      .lean();
     if (!event) throw new Error("Event not found");
-
     return JSON.parse(JSON.stringify(event));
   } catch (error) {
     console.error("Error fetching event:", error);

@@ -22,11 +22,11 @@ export default function EditEventForm({ event }) {
     defaultValues: {
       title: event.title,
       description: event.description,
-      category: event?.category || "",
+      category: event?.category?._id || "",
       venue: event.venue,
       date: event.date ? new Date(event.date).toISOString().split("T")[0] : "",
       price: event.price,
-      tags: event?.tags || [],
+      tags: event?.tags.map((tag) => tag._id) || [],
     },
   });
 
