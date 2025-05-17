@@ -14,10 +14,14 @@ export const getAllEvents = async (searchParams = {}) => {
     await dbConnect();
 
     const query = {};
-    if (category) query.category = category;
-    if (Array.isArray(tags) && tags.length > 0) {
-      query.tags = { $all: tags };
+
+    // Normalize tags input
+    const tagsArray = typeof tags === "string" ? [tags] : tags;
+    if (Array.isArray(tagsArray) && tagsArray.length > 0) {
+      query.tags = { $all: tagsArray };
     }
+
+    if (category) query.category = category;
 
     const limit = 5;
     const skip = (parseInt(page) - 1) * limit;
