@@ -9,7 +9,7 @@ function EventCard({ event }) {
     <div className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-xl shadow-sm hover:shadow-lg transition-shadow flex flex-col overflow-hidden group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={event.image}
+        src={event?.image.url}
         alt={event.title}
         className="w-full h-48 object-cover"
       />

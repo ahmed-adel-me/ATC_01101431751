@@ -4,7 +4,9 @@ import dbConnect from "@/lib/dbConnect";
 import Event from "@/models/Event";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { uploadImage, deleteImage } from "@/lib/utils/imageHandler";
-// Server action to get all events
+import { revalidatePath } from "next/cache";
+
+// Get all events
 export const getAllEvents = async (searchParams = {}) => {
   const { category, tags = [], page = 1 } = searchParams;
 
@@ -12,15 +14,9 @@ export const getAllEvents = async (searchParams = {}) => {
     await dbConnect();
 
     const query = {};
-
-    // Optional: filter by category if provided
-    if (category) {
-      query.category = category;
-    }
-
-    // Optional: filter by tags if provided
+    if (category) query.category = category;
     if (Array.isArray(tags) && tags.length > 0) {
-      query.tags = { $all: tags }; // or use $in for partial match
+      query.tags = { $all: tags };
     }
 
     const limit = 5;
@@ -46,16 +42,14 @@ export const getAllEvents = async (searchParams = {}) => {
   }
 };
 
+// Get one event
 export const getEventById = async (eventId) => {
   try {
-    // Connect to the database
     await dbConnect();
 
     const event = await Event.findById(eventId).lean();
-    if (!event) {
-      throw new Error("Event not found");
-    }
-    // Using JSON.parse(JSON.stringify(...)) to remove Mongoose _id warning and ensure plain objects
+    if (!event) throw new Error("Event not found");
+
     return JSON.parse(JSON.stringify(event));
   } catch (error) {
     console.error("Error fetching event:", error);
@@ -63,18 +57,17 @@ export const getEventById = async (eventId) => {
   }
 };
 
-// Server action to create a new event with an uploaded image
+// Create event
 export const createEvent = async (formData) => {
   try {
     await requireAdmin();
     await dbConnect();
 
     const image = formData.get("image");
-    let imageUrl = undefined;
+    let imageData;
 
-    // Only upload if an image file is provided
     if (image && typeof image !== "string") {
-      imageUrl = await uploadImage(image);
+      imageData = await uploadImage(image); // Returns { url, public_id }
     }
 
     let tags = formData.getAll("tags");
@@ -90,9 +83,8 @@ export const createEvent = async (formData) => {
       tags,
     };
 
-    // Only add image field if an image was uploaded
-    if (imageUrl) {
-      eventData.image = imageUrl;
+    if (imageData) {
+      eventData.image = imageData; // Whole object
     }
 
     await Event.create(eventData);
@@ -101,6 +93,8 @@ export const createEvent = async (formData) => {
     throw new Error("Failed to create event");
   }
 };
+
+// Edit event
 export async function editEvent(id, formData) {
   try {
     await requireAdmin();
@@ -125,22 +119,29 @@ export async function editEvent(id, formData) {
       price: Number(price),
     };
 
-    // Only update image if a new file is provided
     if (image && typeof image !== "string") {
       const existingEvent = await Event.findById(id);
       if (!existingEvent) throw new Error("Event not found");
 
-      const newImagePath = await uploadImage(image, existingEvent.image);
-      updateData.image = newImagePath;
+      // Delete old image from Cloudinary
+      if (existingEvent.image?.public_id) {
+        await deleteImage(existingEvent.image.public_id);
+      }
+
+      // Upload new image to Cloudinary
+      const newImageData = await uploadImage(image);
+      updateData.image = newImageData;
     }
 
     await Event.findByIdAndUpdate(id, updateData);
+    revalidatePath(`/admin/events/edit/${id}`);
   } catch (error) {
     console.error("Error updating event:", error);
     throw new Error("Failed to update event");
   }
 }
 
+// Delete event
 export const deleteEvent = async (eventId) => {
   try {
     await requireAdmin();
@@ -151,8 +152,8 @@ export const deleteEvent = async (eventId) => {
 
     await Event.deleteOne({ _id: eventId });
 
-    if (event.image) {
-      await deleteImage(event.image);
+    if (event.image?.public_id) {
+      await deleteImage(event.image.public_id);
     }
   } catch (error) {
     console.error("Error deleting event:", error);

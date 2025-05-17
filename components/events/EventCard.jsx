@@ -14,7 +14,7 @@ export default async function EventCard({ event }) {
       {/* Event Image */}
       {event?.image && (
         <img
-          src={event.image}
+          src={event.image.url}
           alt={event.title}
           className="w-full h-48 object-cover rounded mb-4"
         />

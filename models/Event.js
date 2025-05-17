@@ -30,7 +30,10 @@ const eventSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: String, // Optional, store URL or file path
+    image: {
+      url: { type: String },
+      public_id: { type: String },
+    },
   },
   { timestamps: true }
 );
