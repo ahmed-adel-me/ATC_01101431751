@@ -84,7 +84,7 @@ Visit `http://localhost:3000` in your browser.
 
 ## 🌐 Live Demo
 
-🔗 [https://atc-01101431751.vercel.app](https://atc-01101431751.vercel.app)
+🔗 [Live Demo](https://atc-01101431751.vercel.app)
 
 ✨ You can log in with the pre-created admin credentials:
 
