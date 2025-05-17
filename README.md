@@ -10,7 +10,7 @@ A full-stack web application that allows users to browse and book events, while 
 * **Backend:** Next.js API routes (Server Actions), Mongoose ODM
 * **Authentication:** NextAuth.js with role-based access (Admin / User)
 * **Database:** MongoDB (Mongoose ODM)
-* **Storage:** Local file system for event images
+* **Storage:** Cloudinary (image upload and delivery)
 * **AI Tools:** ChatGPT, GitHub Copilot
 
 ---
@@ -22,22 +22,21 @@ A full-stack web application that allows users to browse and book events, while 
 │
 ├── app/                  # App directory (frontend & API routes)
 ├── components/           # Shared React components
-├── lib/                  # Supabase client, server helpers
+├── lib/                  # Database + auth + Cloudinary logic
+├── models/               # Mongoose models
 ├── i18n/                 # Multi-language support (EN/AR)
+├── messages/             # Translations (en.json, ar.json)
 ├── public/               # Static assets
-├── middleware.ts         # Role-based route protection
-├── .env.local.example    # Example environment variable file
+├── middleware.js         # Route protection
+├── .env.local.example    # Example env file
 ├── README.md             # Main project documentation
-├── README.frontend.md       # Frontend-specific instructions
-├── README.backend.md        # Backend-specific instructions
-├── backend/README.md     # Backend-specific instructions
+├── README.frontend.md    # Frontend-specific instructions
+├── README.backend.md     # Backend-specific instructions
 ```
 
 ---
 
 ## 🚀 Getting Started
-
-Follow these instructions to run the project locally.
 
 ### 1. Clone the Repository
 
@@ -54,14 +53,17 @@ npm install
 
 ### 3. Configure Environment Variables
 
-Create a `.env.local` file in the root directory and add:
+Create a `.env.local` file in the root directory:
 
 ```env
 NEXTAUTH_SECRET=your_auth_secret
 MONGODB_URI=your_mongodb_connection_uri
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-> 🔑 Replace with your own environment variables based on your local MongoDB and NextAuth setup.
+> 🔑 Replace with your actual credentials.
 
 ### 4. Run the Development Server
 
@@ -82,8 +84,6 @@ Visit `http://localhost:3000` in your browser.
 
 ## 📁 Sub-Project Documentation
 
-The frontend and backend documentation are included in this root directory for convenience:
-
 * 🧩 [Frontend Documentation](./README.frontend.md)
 * 🔧 [Backend Documentation](./README.backend.md)
 
@@ -93,26 +93,25 @@ The frontend and backend documentation are included in this root directory for c
 
 ### 👥 Authentication
 
-* User registration and login (NextAuth)
+* User registration and login with credentials
 * Role-based access (Admin vs User)
 * Middleware-protected routes
 
 ### 🎫 User Experience
 
-* Home page with event cards
-* "Book Now" button per event (shows "Booked" if already booked)
-* Detailed event page with booking functionality
-* Congratulations screen after booking
+* Responsive home page with event cards
+* Each event shows "Book Now" or "Booked"
+* Event details + booking confirmation screen
 
 ### 🧾 Admin Panel
 
-* Add, update, delete events
-* Upload event images
-* View event categories and tags
+* CRUD for events, categories, and tags
+* Upload event images via Cloudinary
+* Role-protected admin views
 
 ### 🌍 Internationalization
 
-* English and Arabic language support via i18n files
+* English and Arabic via i18n + messages folder
 
 ---
 
@@ -122,7 +121,7 @@ The frontend and backend documentation are included in this root directory for c
 | ---------------------- | ---------------------------------- |
 | Tags and Categories    | ✅ Implemented                      |
 | Booked Label UI        | ✅ Implemented                      |
-| Image Upload           | ✅ Local Storage                    |
+| Image Upload           | ✅ Cloudinary                       |
 | Multi-language (EN/AR) | ✅ Implemented                      |
 | Responsive UI          | ✅ Fully responsive (Tailwind used) |
 | Pagination             | ✅ Implemented                      |
@@ -134,16 +133,14 @@ The frontend and backend documentation are included in this root directory for c
 
 ## 🤖 AI Tools Used
 
-| Tool               | Description                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------- |
-| **ChatGPT**        | Used for project architecture, Supabase setup, localization, and CRUD implementation guidance |
-| **GitHub Copilot** | Assisted in auto-completion for React components and Tailwind classes                         |
+| Tool               | Description                                                                      |
+| ------------------ | -------------------------------------------------------------------------------- |
+| **ChatGPT**        | Used for architecture, bug fixing, authentication logic, and i18n integration    |
+| **GitHub Copilot** | Assisted in auto-generating form handling, components, and styling with Tailwind |
 
 ---
 
 ## 🌐 Live Demo
-
-The application is live at:
 
 🔗 [https://atc-01101431751.vercel.app](https://atc-01101431751.vercel.app)
 
@@ -151,17 +148,17 @@ The application is live at:
 
 ## 📸 Screenshots
 
-> *Add actual screenshots before submission.*
+> *Add screenshots before submission.*
 
-* Home Page (Event Listings)
-* Event Details Page
-* Booking Confirmation Page
-* Admin Panel (Dashboard)
+* Home Page
+* Event Detail
+* Booking Confirmation
+* Admin Panel
 
 ---
 
 ## 📅 Submission Notes
 
-* Developed for the **Areeb AI Challenge – May 2025**.
-* AI tools were used actively throughout the development lifecycle.
-* Project meets the required feature set and structure described in the task.
+* Developed for the **Areeb AI Challenge – May 2025**
+* AI tools were actively used throughout development
+* All features from the task description are implemented and documented

@@ -6,12 +6,11 @@ This document describes the frontend layer of the **ATC\_01101431751** event boo
 
 ## 🛠️ Technologies Used
 
-* **Next.js 15 (App Router)** – file-based routing with layouts and loading/error states
+* **Next.js 15 (App Router)** – file-based routing with layouts and loading/error states (App Router)\*\* – file-based routing with layouts and loading/error states
 * **Tailwind CSS** – utility-first styling framework
 * **React Hook Form** – for form state management and validation
 * **Next Themes** – dark mode support
 * **Next Intl** – multi-language support (English & Arabic)
-* **React Icons** – for consistent iconography
 * **React Icons** – for consistent iconography
 
 ---
@@ -31,7 +30,8 @@ This document describes the frontend layer of the **ATC\_01101431751** event boo
 * **Admin Dashboard**: only accessible to users with the `admin` role
 
 ### 🛒 Event Booking
-* Each event on the homepage displays a “Book Now” button if available, or a “Booked” label if the user has already reserved it
+
+* Each event on the homepage displays a **“Book Now”** button if available, or a **“Booked”** label if the user has already reserved it
 * Users can book events if authenticated
 * Duplicate booking prevention on backend
 * Confirmation shown after booking
@@ -75,7 +75,6 @@ This document describes the frontend layer of the **ATC\_01101431751** event boo
 ├── app/
 │   ├── layout.js              # Root layout
 │   ├── page.js                # Home (event listing)
-|   ├── globals.css           # Tailwind CSS
 │   ├── events/[id]/page.js    # Event detail
 │   ├── auth/login/page.js     # Login form
 │   ├── auth/signup/page.js    # Signup form
@@ -94,6 +93,7 @@ This document describes the frontend layer of the **ATC\_01101431751** event boo
 ├── i18n/                      # i18n configuration
 ├── messages/                 # Translation files (en.json, ar.json)
 ├── public/                    # Static assets
+├── app/globals.css           # Tailwind CSS
 ```
 
 ---
@@ -101,7 +101,7 @@ This document describes the frontend layer of the **ATC\_01101431751** event boo
 ## 📄 Notes
 
 * Uses server actions to interact with backend logic
-* Image uploads handled via `FormData`
+* Image uploads are processed using `FormData` and stored on **Cloudinary** via backend integration
 * Optimized for responsiveness and maintainability
 
 ---
