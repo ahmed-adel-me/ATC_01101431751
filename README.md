@@ -82,6 +82,18 @@ Visit `http://localhost:3000` in your browser.
 
 ---
 
+## 🌐 Live Demo
+
+🔗 [https://atc-01101431751.vercel.app](https://atc-01101431751.vercel.app)
+
+✨ You can log in with the pre-created admin credentials:
+
+* Email: admin@gmail.com
+
+* Password: admin123
+
+---
+
 ## 📁 Sub-Project Documentation
 
 * 🧩 [Frontend Documentation](./README.frontend.md)
@@ -137,12 +149,6 @@ Visit `http://localhost:3000` in your browser.
 | ------------------ | -------------------------------------------------------------------------------- |
 | **ChatGPT**        | Used for architecture, bug fixing, authentication logic, and i18n integration    |
 | **GitHub Copilot** | Assisted in auto-generating form handling, components, and styling with Tailwind |
-
----
-
-## 🌐 Live Demo
-
-🔗 [https://atc-01101431751.vercel.app](https://atc-01101431751.vercel.app)
 
 ---
 
