@@ -20,7 +20,7 @@ export default async function EventPage({ params }) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-6 lg:px-20">
-      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-y-hidden">
         {/* Event Image */}
         <div className="relative w-full h-[400px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
               <div>
                 <Navbar />
               </div>
-              <div className="flex-1 overflow-scroll">{children}</div>
+              <div className="flex-1 overflow-y-scroll">{children}</div>
             </NextIntlClientProvider>
           </ThemeProvider>
         </body>
